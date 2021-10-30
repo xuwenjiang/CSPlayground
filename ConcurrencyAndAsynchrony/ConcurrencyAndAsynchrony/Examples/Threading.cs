@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Playground.Examples
+namespace ConcurrencyAndAsynchrony.Examples
 {
     /// <summary>
     /// Threading
