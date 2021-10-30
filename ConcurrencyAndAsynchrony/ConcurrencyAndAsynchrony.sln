@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{C485E18A-EC99-499F-967F-773D4C603387}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrencyAndAsynchrony", "ConcurrencyAndAsynchrony\ConcurrencyAndAsynchrony.csproj", "{717ED25E-48BE-4A1A-B142-BA959DFEC71A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C485E18A-EC99-499F-967F-773D4C603387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C485E18A-EC99-499F-967F-773D4C603387}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C485E18A-EC99-499F-967F-773D4C603387}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C485E18A-EC99-499F-967F-773D4C603387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{717ED25E-48BE-4A1A-B142-BA959DFEC71A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{717ED25E-48BE-4A1A-B142-BA959DFEC71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{717ED25E-48BE-4A1A-B142-BA959DFEC71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{717ED25E-48BE-4A1A-B142-BA959DFEC71A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {879B5872-C43E-4D9E-AB98-DA1C5A123D57}
+		SolutionGuid = {F9D8A4A4-143A-44C2-8EDE-D152E0DDD33D}
 	EndGlobalSection
 EndGlobal
