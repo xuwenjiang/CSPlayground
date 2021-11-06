@@ -7,16 +7,47 @@ namespace CSPlayground.Examples
     /// Threading
     /// A thread is an execution path that can proceed independently of others.
     /// 
-    /// 
     /// </summary>
-    class Threading
+    class Threading : AbstractExample
     {
+        static bool _done;
+        static readonly object _locker = new object();
+
+        protected override void DisplayExampleListAndRunBasedOnSelection()
+        {
+            Console.WriteLine("****** Please Select an Example ******");
+            Console.WriteLine("*** 1. Create a Thread             ***");
+            Console.WriteLine("*** 2. Join And Sleep              ***");
+            Console.WriteLine("*** 3. Blocking                    ***");
+            Console.WriteLine("*** 4. Locking And ThreadSafe      ***");
+            Console.WriteLine("*** 5. Passing Data To Thread      ***");
+            Console.WriteLine("**************************************");
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    CreateAThread();
+                    break;
+                case "2":
+                    JoinAndSleep();
+                    break;
+                case "3":
+                    Blocking();
+                    break;
+                case "4":
+                    LockingAndThreadSafe();
+                    break;
+                case "5":
+                    PassingDataToThread();
+                    break;
+            }
+        }
+
         /// <summary>
         /// Example 1
         /// You will see X and Y blocks. This depends on Operation System.
         /// 1.1 Thread can have Name
         /// </summary>
-        public void CreateAThread()
+        private void CreateAThread()
         {
             // kick off a new thread
             Thread t1 = new Thread(WriteY);
@@ -34,7 +65,7 @@ namespace CSPlayground.Examples
             for (int i = 0; i < 1000; i++)
             {
                 Console.Write("X");
-            }
+            } 
         }
 
         /// <summary>
@@ -42,7 +73,7 @@ namespace CSPlayground.Examples
         /// Use Join method to let current thread to wait another thread to end
         /// you can specify timeout
         /// </summary>
-        public void JoinAndSleep()
+        private void JoinAndSleep()
         {
             Thread t1 = new Thread(WriteY);
             t1.Name = "1";
@@ -70,9 +101,9 @@ namespace CSPlayground.Examples
         /// 
         /// Can do "spin" like this: while (DateTime.Now < nextStartTime) Thread.Sleep(100);
         /// </summary>
-        public void Blocking()
+        private void Blocking()
         {
-            Thread t1 = new Thread(WriteY);
+            Thread t1 = new Thread(WriteYWithSleep);
             t1.Name = "1";
             t1.Start();
 
@@ -81,23 +112,49 @@ namespace CSPlayground.Examples
                 bool blocked = (t1.ThreadState & ThreadState.WaitSleepJoin) != 0;
                 if (blocked)
                 {
-                    // if you comment WriteY()'s Thread.Sleep(1), you will see this line printed.
                     Console.WriteLine("Blocked");
                 }
             }
+            Console.WriteLine();
         }
 
-        public void LocalAndShared()
+        /// <summary>
+        /// Example 4
+        /// 
+        /// lock can be upon any reference-type object
+        /// </summary>
+        private void LockingAndThreadSafe()
         {
-            
+            Thread t1 = new Thread(WriteWithLock);
+            t1.Name = "t1";
+            t1.Start();
+
+            Thread t2 = new Thread(WriteWithLock);
+            t2.Name = "t2";
+            t2.Start();
         }
 
-        private void WriteFive()
+        private void PassingDataToThread()
         {
-            for (int i = 0; i < 5; i++)
+            Thread t1 = new Thread(()=> { Print("Hello from Lambda"); });
+            t1.Start();
+        }
+
+        private void Print(string message) => Console.WriteLine(message);
+
+
+        private void WriteWithLock()
+        {
+            Console.WriteLine($"{Thread.CurrentThread.Name} started");
+            lock (_locker)
             {
-                
+                if (!_done)
+                {
+                    Console.WriteLine($"{Thread.CurrentThread.Name} done");
+                    _done = true;
+                }
             }
+            Console.WriteLine($"{Thread.CurrentThread.Name} finished");
         }
 
         private void WaitInput(out string read)
@@ -110,7 +167,15 @@ namespace CSPlayground.Examples
             for (int i = 0; i < 1000; i++)
             {
                 Console.Write("Y"+Thread.CurrentThread.Name);
-                //Thread.Sleep(1);
+            }
+        }
+
+        private void WriteYWithSleep()
+        {
+            for (int i = 0; i < 1000; i++)
+            {
+                Console.Write("Y" + Thread.CurrentThread.Name);
+                Thread.Sleep(1);
             }
         }
     }
