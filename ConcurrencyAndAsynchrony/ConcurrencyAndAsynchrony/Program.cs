@@ -10,7 +10,8 @@ namespace ConcurrencyAndAsynchrony
             Threading threadingExample = new Threading();
 
             //threadingExample.CreateAThread();
-            threadingExample.JoinAndSleep();
+            //threadingExample.JoinAndSleep();
+            threadingExample.Blocking();
         }
     }
 }

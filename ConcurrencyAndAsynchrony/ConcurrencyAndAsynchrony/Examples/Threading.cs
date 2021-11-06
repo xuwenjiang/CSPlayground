@@ -61,12 +61,56 @@ namespace ConcurrencyAndAsynchrony.Examples
             WriteY();
         }
 
+        /// <summary>
+        /// Example 3
+        /// 
+        /// An I/O-bound operation works in one of two ways: 
+        /// 1. either waits synchronously on the current thread until the operation is complete (such as Console.ReadLine, Thread.Sleep, or Thread.Join), 
+        /// 2. or it operates asynchronously, firing a callback when the operation finishes some time later.
+        /// 
+        /// Can do "spin" like this: while (DateTime.Now < nextStartTime) Thread.Sleep(100);
+        /// </summary>
+        public void Blocking()
+        {
+            Thread t1 = new Thread(WriteY);
+            t1.Name = "1";
+            t1.Start();
+
+            while(t1.IsAlive)
+            {
+                bool blocked = (t1.ThreadState & ThreadState.WaitSleepJoin) != 0;
+                if (blocked)
+                {
+                    // if you comment WriteY()'s Thread.Sleep(1), you will see this line printed.
+                    Console.WriteLine("Blocked");
+                }
+            }
+        }
+
+        public void LocalAndShared()
+        {
+            
+        }
+
+        private void WriteFive()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                
+            }
+        }
+
+        private void WaitInput(out string read)
+        {
+            read = Console.ReadLine();
+        }
+
         private void WriteY()
         {
             for (int i = 0; i < 1000; i++)
             {
                 Console.Write("Y"+Thread.CurrentThread.Name);
-                Thread.Sleep(1);
+                //Thread.Sleep(1);
             }
         }
     }
