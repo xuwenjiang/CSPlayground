@@ -1,7 +1,7 @@
 ﻿using System;
-using ConcurrencyAndAsynchrony.Examples;
+using CSPlayground.Examples;
 
-namespace ConcurrencyAndAsynchrony
+namespace CSPlayground
 {
     class Program
     {

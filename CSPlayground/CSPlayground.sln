@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrencyAndAsynchrony", "ConcurrencyAndAsynchrony\ConcurrencyAndAsynchrony.csproj", "{717ED25E-48BE-4A1A-B142-BA959DFEC71A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSPlayground", "CSPlayground\CSPlayground.csproj", "{717ED25E-48BE-4A1A-B142-BA959DFEC71A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
