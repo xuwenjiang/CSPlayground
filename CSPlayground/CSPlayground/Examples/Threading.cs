@@ -10,8 +10,8 @@ namespace CSPlayground.Examples
     /// </summary>
     class Threading : AbstractExample
     {
-        static bool _done;
-        static readonly object _locker = new object();
+        private bool _done;
+        private readonly object _locker = new object();
 
         protected override void DisplayExampleListAndRunBasedOnSelection()
         {
