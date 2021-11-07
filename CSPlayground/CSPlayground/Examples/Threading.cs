@@ -21,6 +21,7 @@ namespace CSPlayground.Examples
             Console.WriteLine("*** 3. Blocking                    ***");
             Console.WriteLine("*** 4. Locking And ThreadSafe      ***");
             Console.WriteLine("*** 5. Passing Data To Thread      ***");
+            Console.WriteLine("*** 6. Foreground Background Threads      ***");
             Console.WriteLine("**************************************");
             switch (Console.ReadLine())
             {
