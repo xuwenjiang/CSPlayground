@@ -134,14 +134,42 @@ namespace CSPlayground.Examples
             t2.Start();
         }
 
+        /// <summary>
+        /// Example 5
+        ///
+        /// passing data by lambda expression and by calling start method.
+        /// 
+        /// </summary>
         private void PassingDataToThread()
         {
-            Thread t1 = new Thread(()=> { Print("Hello from Lambda"); });
+            // passing by lambda
+            Thread t1 = new Thread(()=> { PrintWithString("Hello from Lambda"); });
             t1.Start();
+
+            // passing by lambda with any number 
+            Thread t2 = new Thread(() =>
+            {
+                Console.WriteLine("I'm running on another thread!");
+                Console.WriteLine("This is so easy!");
+            });
+            t2.Start();
+
+            // passing to thread's start method (less flexible)
+            Thread t3 = new Thread(PrintWithObj);
+            t3.Start("Hello from t2!");
+
+            t1.Join();
+            t2.Join();
+            t3.Join();
         }
 
-        private void Print(string message) => Console.WriteLine(message);
+        private void PrintWithString(string message) => Console.WriteLine(message);
 
+        private void PrintWithObj(object messageObj)
+        {
+            string message = (string)messageObj;   // We need to cast here
+            Console.WriteLine(message);
+        }
 
         private void WriteWithLock()
         {
