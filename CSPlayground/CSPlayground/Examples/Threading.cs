@@ -15,14 +15,14 @@ namespace CSPlayground.Examples
 
         protected override void DisplayExampleListAndRunBasedOnSelection()
         {
-            Console.WriteLine("****** Please Select an Example ******");
-            Console.WriteLine("*** 1. Create a Thread             ***");
-            Console.WriteLine("*** 2. Join And Sleep              ***");
-            Console.WriteLine("*** 3. Blocking                    ***");
-            Console.WriteLine("*** 4. Locking And ThreadSafe      ***");
-            Console.WriteLine("*** 5. Passing Data To Thread      ***");
-            Console.WriteLine("*** 6. Foreground Background Threads      ***");
-            Console.WriteLine("**************************************");
+            Console.WriteLine("************ Please Select an Example ************");
+            Console.WriteLine("*** 1. Create a Thread                         ***");
+            Console.WriteLine("*** 2. Join And Sleep                          ***");
+            Console.WriteLine("*** 3. Blocking                                ***");
+            Console.WriteLine("*** 4. Locking And ThreadSafe                  ***");
+            Console.WriteLine("*** 5. Passing Data To Thread                  ***");
+            Console.WriteLine("*** 6. Foreground Background Threads           ***");
+            Console.WriteLine("**************************************************");
             switch (Console.ReadLine())
             {
                 case "1":
@@ -39,6 +39,9 @@ namespace CSPlayground.Examples
                     break;
                 case "5":
                     PassingDataToThread();
+                    break;
+                case "6":
+                    ForegroundBackgroundThreads();
                     break;
             }
         }
@@ -162,6 +165,32 @@ namespace CSPlayground.Examples
             t1.Join();
             t2.Join();
             t3.Join();
+        }
+
+        /// <summary>
+        /// Example 6
+        /// 
+        /// By default, threads are foreground threads.
+        /// 
+        /// any foreground thread is running ==> application running.
+        /// all foreground threads finish ==> application ends ==> alll backgrounds terminate.
+        /// 
+        /// You can query or change a thread’s background status using its IsBackground.
+        /// 
+        /// In this example, you will find that if the thread is in foreground, when you type exit, the Y will still be printed to screen.
+        /// </summary>
+        private void ForegroundBackgroundThreads()
+        {
+            Console.WriteLine("Will Print Y 100 times with a pulse of 1 time per second");
+            Console.WriteLine("in put 1 if you want that thread to run in background, otherwise it will run in foreground");
+            Console.WriteLine("The application itself will terminate if you type exit");
+            string input = Console.ReadLine();
+            Thread t = new Thread(() => { for (int i = 0; i < 100; i++) { Console.Write("Y"); Thread.Sleep(1000); } });
+            if (input == "1")
+            {
+                t.IsBackground = true;
+            }
+            t.Start();
         }
 
         private void PrintWithString(string message) => Console.WriteLine(message);
