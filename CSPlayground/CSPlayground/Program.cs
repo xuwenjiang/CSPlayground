@@ -27,6 +27,8 @@ namespace CSPlayground
             {
                 case "1":
                     return new Threading();
+                case "2":
+                    return new TasksExample();
             }
 
             throw new Exception("Select invalid");
@@ -36,6 +38,7 @@ namespace CSPlayground
         {
             Console.WriteLine("****** Please Select a Category ******");
             Console.WriteLine("*** 1. Threading                   ***");
+            Console.WriteLine("*** 2. Tasks                       ***");
             Console.WriteLine("*******   Type exit to Exit    *******");
         }
     }

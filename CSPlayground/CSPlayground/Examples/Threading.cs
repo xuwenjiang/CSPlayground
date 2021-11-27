@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace CSPlayground.Examples
 {
@@ -22,6 +23,8 @@ namespace CSPlayground.Examples
             Console.WriteLine("*** 4. Locking And ThreadSafe                  ***");
             Console.WriteLine("*** 5. Passing Data To Thread                  ***");
             Console.WriteLine("*** 6. Foreground Background Threads           ***");
+            Console.WriteLine("*** 7. Signaling                               ***");
+            Console.WriteLine("*** 7. ThreadPool                              ***");
             Console.WriteLine("**************************************************");
             switch (Console.ReadLine())
             {
@@ -43,6 +46,12 @@ namespace CSPlayground.Examples
                 case "6":
                     ForegroundBackgroundThreads();
                     break;
+                case "7":
+                    Signaling();
+                    break;
+                case "8":
+                    ThreadPool();
+                    break;
             }
         }
 
@@ -51,7 +60,7 @@ namespace CSPlayground.Examples
         /// You will see X and Y blocks. This depends on Operation System.
         /// 1.1 Thread can have Name
         /// </summary>
-        private void CreateAThread()
+        public void CreateAThread()
         {
             // kick off a new thread
             Thread t1 = new Thread(WriteY);
@@ -77,7 +86,7 @@ namespace CSPlayground.Examples
         /// Use Join method to let current thread to wait another thread to end
         /// you can specify timeout
         /// </summary>
-        private void JoinAndSleep()
+        public void JoinAndSleep()
         {
             Thread t1 = new Thread(WriteY);
             t1.Name = "1";
@@ -105,7 +114,7 @@ namespace CSPlayground.Examples
         /// 
         /// Can do "spin" like this: while (DateTime.Now < nextStartTime) Thread.Sleep(100);
         /// </summary>
-        private void Blocking()
+        public void Blocking()
         {
             Thread t1 = new Thread(WriteYWithSleep);
             t1.Name = "1";
@@ -127,7 +136,7 @@ namespace CSPlayground.Examples
         /// 
         /// lock can be upon any reference-type object
         /// </summary>
-        private void LockingAndThreadSafe()
+        public void LockingAndThreadSafe()
         {
             Thread t1 = new Thread(WriteWithLock);
             t1.Name = "t1";
@@ -144,7 +153,7 @@ namespace CSPlayground.Examples
         /// passing data by lambda expression and by calling start method.
         /// 
         /// </summary>
-        private void PassingDataToThread()
+        public void PassingDataToThread()
         {
             // passing by lambda
             Thread t1 = new Thread(()=> { PrintWithString("Hello from Lambda"); });
@@ -160,7 +169,7 @@ namespace CSPlayground.Examples
 
             // passing to thread's start method (less flexible)
             Thread t3 = new Thread(PrintWithObj);
-            t3.Start("Hello from t2!");
+            t3.Start("Hello from t3!");
 
             t1.Join();
             t2.Join();
@@ -179,7 +188,7 @@ namespace CSPlayground.Examples
         /// 
         /// In this example, you will find that if the thread is in foreground, when you type exit, the Y will still be printed to screen.
         /// </summary>
-        private void ForegroundBackgroundThreads()
+        public void ForegroundBackgroundThreads()
         {
             Console.WriteLine("Will Print Y 100 times with a pulse of 1 time per second");
             Console.WriteLine("in put 1 if you want that thread to run in background, otherwise it will run in foreground");
@@ -191,6 +200,52 @@ namespace CSPlayground.Examples
                 t.IsBackground = true;
             }
             t.Start();
+        }
+
+        /// <summary>
+        /// Example 7
+        ///
+        /// Sometimes, you need a thread to wait until receiving notification(s) from other thread(s).
+        /// </summary>
+        public void Signaling()
+        {
+            Console.WriteLine("There will be a thread started, so press 1 to let it continue.");
+            var signal = new ManualResetEvent(false);
+
+            Thread t = new Thread(() =>
+            {
+                Console.WriteLine("Waiting for signal...");
+                signal.WaitOne();
+                signal.Dispose();
+                Console.WriteLine("Got signal!");
+            });
+            t.Start();
+
+            while (Console.ReadLine() != "1")
+            {
+
+            }
+
+            signal.Set();
+            t.Join();
+        }
+
+        /// <summary>
+        /// Example 8
+        ///
+        /// Whenever you start a thread, a few hundred microseconds are spent organizing such things as a fresh local variable stack.
+        /// The thread pool cuts this overhead by having a pool of pre-created recyclable threads.
+        ///
+        /// Thread pool also can do hygience in the thread pool, why?
+        /// Ensure that a temporary excess of compute-bound work does not cause CPU oversubscription
+        /// Oversubscription is the condition of there being more active threads than CPU cores, with the OS having to time-slice threads.
+        /// Oversubscription hurts performance because time-slicing requires expensive context switches and can invalidate the CPU caches that have become essential in delivering performance to modern processors.
+        /// 
+        ///  
+        /// </summary>
+        public void ThreadPool()
+        {
+            Task.Run(() => Console.WriteLine("The easiest way to explicitly run something on a pooled thread is to use Task.Run"));
         }
 
         private void PrintWithString(string message) => Console.WriteLine(message);
